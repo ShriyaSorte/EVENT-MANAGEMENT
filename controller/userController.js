@@ -16,8 +16,9 @@ async function registeruser(req,res){
 async function loginuser(req,res){
     try {
         const {email,password} = req.body;
+        // console.log("Email and Password received:", email, password);
         const user = await userModel.findOne({email});
-        if(!user || !(await user.comparepassword(password))){
+        if(!user || !(await user.comparePassword(password))){
             return res.status(400).send({message: 'User not found'});
         }
         const token = jwt.sign({_id:user._id}, 'shriya', {expiresIn: '1h'});
